@@ -49,7 +49,8 @@
     "deploy-and-graph": "yarn deploy && yarn graph-ship-local",
     "optimism-local-init": "cd docker/optimism-integration && git submodule init && git submodule update",
     "optimism-local-up": "cd docker/optimism-integration make up",
-    "upload": "yarn workspace @scaffold-eth/hardhat upload"
+    "upload": "yarn workspace @scaffold-eth/hardhat upload",
+    "postinstall": "patch-package --patch-dir node_modules/@thesatoshicompany/optimism-openzeppelin-compat/patches"
   },
   "workspaces": {
     "packages": [
@@ -61,5 +62,8 @@
       "**/hardhat",
       "**/hardhat/**"
     ]
+  },
+  "dependencies": {
+    "@thesatoshicompany/optimism-openzeppelin-compat": "^1.0.3"
   }
 }

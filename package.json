@@ -15,6 +15,7 @@
     "react-app:start": "yarn workspace @scaffold-eth/react-app start",
     "react-app:test": "yarn workspace @scaffold-eth/react-app test",
     "build": "yarn workspace @scaffold-eth/react-app build --max-old-space-size=12288",
+    "docker-install-build": "cd ./docker/optimism && yarn && yarn build && cd ./ops && docker-compose build && docker-compose up",
     "chain": "yarn workspace @scaffold-eth/hardhat chain",
     "fork": "yarn workspace @scaffold-eth/hardhat fork",
     "node": "yarn workspace @scaffold-eth/hardhat chain",
@@ -47,8 +48,8 @@
     "graph-deploy-local": "yarn workspace @scaffold-eth/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 scaffold-eth/your-contract",
     "graph-ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
     "deploy-and-graph": "yarn deploy && yarn graph-ship-local",
-    "optimism-local-init": "cd docker/optimism-integration && git submodule init && git submodule update",
-    "optimism-local-up": "cd docker/optimism-integration make up",
+    "optimism-local-init": "cd docker/optimism && git submodule init && git submodule update",
+    "optimism-local-up": "cd docker/optimism make up",
     "upload": "yarn workspace @scaffold-eth/hardhat upload",
     "postinstall": "patch-package --patch-dir node_modules/@thesatoshicompany/optimism-openzeppelin-compat/patches"
   },

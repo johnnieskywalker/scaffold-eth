@@ -62,8 +62,13 @@ const main = async () => {
 
   console.log("input args:",bytes32Array)
 
-  const yourCollectibleL2 = await deploy({contractName: "YourCollectible", rpcUrl: selectedNetwork.l2RpcUrl, ovm: true
-    , _args: [[
+  const yourCollectibleL2 = await deploy({
+    gasPrice: hre.ethers.BigNumber.from('0'),
+    gasLimit: 8999999,
+    contractName: "YourCollectible", 
+    rpcUrl: selectedNetwork.l2RpcUrl, 
+    ovm: true, 
+    _args: [[
   '0xd684e2e08b1f363176cb14405d8c1eefb7788c002ba583f1a838130956635ac8',
   '0xb46d21f480f9a029c3f0043b96b48b6352b52dfc282b8f7101aa684590ad9c52',
   '0x873000b60b392df07c7ac4cc870a98e616bb98a462288e8f00cf090f0ff81538',
@@ -121,7 +126,10 @@ const main = async () => {
 
     // Approve
     console.log(' Approving L1 deposit contract...')
-    const approveTx = await L1_ERC20.approve(OVM_L1ERC20Gateway.address, 10)
+    const approveTx = await L1_ERC20.approve(OVM_L1ERC20Gateway.address, 10, {
+      gasPrice: hre.ethers.BigNumber.from('0'),
+      gasLimit: 8999999,
+    })
     console.log(' Approved: ' + approveTx.hash)
     await approveTx.wait()
 
@@ -129,7 +137,10 @@ const main = async () => {
 
     // Deposit
     console.log(' Depositing into L1 deposit contract...')
-    const depositTx = await OVM_L1ERC20Gateway.deposit(10, {gasLimit: 1000000})
+    const depositTx = await OVM_L1ERC20Gateway.deposit(10, {
+      gasPrice: hre.ethers.BigNumber.from('0'),
+      gasLimit: 8999999,
+    })
     console.log(' Deposited: ' + depositTx.hash)
     await depositTx.wait()
 
@@ -142,7 +153,10 @@ const main = async () => {
 
     // Withdraw
     console.log(' Withdrawing from L1 deposit contract...')
-    const withdrawalTx = await OVM_L2DepositedERC20.withdraw(10, {gasLimit: 5000000})
+    const withdrawalTx = await OVM_L2DepositedERC20.withdraw(10, {
+      gasPrice: hre.ethers.BigNumber.from('0'),
+      gasLimit: 8999999,
+    })
     await withdrawalTx.wait()
     console.log(' Withdrawal tx hash:' + withdrawalTx.hash)
 

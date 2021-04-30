@@ -29,11 +29,17 @@ function OptimisticETHBridge({ address, l1Provider, l2Provider, l1Network, l2Net
       try {
         if(values.action==='deposit'){
           await l1Tx(L1ETHGatewayContract.deposit({
-            value: parseEther(values.amount.toString())
+            value: parseEther(values.amount.toString()),
+            gasPrice: ethers.BigNumber.from('0'),
+            gasLimit: 8999999
           }))
       } else {
           await l2Tx(L2ETHGatewayContract.withdraw(
-            parseEther(values.amount.toString())
+            parseEther(values.amount.toString()),
+            {
+              gasPrice: ethers.BigNumber.from('0'),
+              gasLimit: 8999999
+            }
           ))
         }
         setBridging(false)
@@ -91,7 +97,11 @@ function OptimisticETHBridge({ address, l1Provider, l2Provider, l1Network, l2Net
         } else if (values.layer==='2') {
             await l2Tx(L2ETHGatewayContract.transfer(
               values.to,
-              parseEther(values.amount.toString())
+              parseEther(values.amount.toString()),
+              {
+                gasPrice: ethers.BigNumber.from('0'),
+                gasLimit: 8999999
+              }
             ))
           }
           closeSend()

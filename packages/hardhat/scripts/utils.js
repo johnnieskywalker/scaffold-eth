@@ -6,7 +6,7 @@ const { utils } = require("ethers");
 const R = require("ramda");
 const {  JsonRpcProvider } = require("@ethersproject/providers");
 
-async function deploy({rpcUrl, contractName, ovm = false, mnemonicFile="./mnemonic.txt", _args = [], overrides = {}, libraries = {}}) {
+async function deploy({rpcUrl, contractName, ovm = false, mnemonicFile="./mnemonic.txt", _args = [], libraries = {}}) {
   console.log(` 🛰 ${ovm?`OVM`:`EVM`} Deploying: ${contractName} on ${rpcUrl}`);
 
   const contractArgs = _args || [];
@@ -24,7 +24,10 @@ async function deploy({rpcUrl, contractName, ovm = false, mnemonicFile="./mnemon
     contractArtifacts = await ethers.getContractFactory(contractName, signerProvider);
   }
 
-  const deployed = await contractArtifacts.deploy(...contractArgs, overrides);
+  const deployed = await contractArtifacts.deploy(...contractArgs, {
+    gasPrice: hre.ethers.BigNumber.from('0'),
+    gasLimit: 8999999,
+  });
   await deployed.deployTransaction.wait()
 
   const encoded = abiEncodeArgs(deployed, contractArgs);
